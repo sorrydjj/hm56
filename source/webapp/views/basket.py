@@ -43,8 +43,9 @@ class BasketDelete(DeleteView):
 
     def post(self, request, *args, **kwargs):
         prod = get_object_or_404(Product, pk=self.kwargs.get('pk'))
-        if Basket.objects.filter(products=prod, counts__lte=0):
-            pass
+        if Basket.objects.filter(products=prod, counts__lte=1):
+            bask = Basket.objects.get(products=prod)
+            bask.delete()
         else:
             bask = Basket.objects.get(products=prod)
             bask.counts -= 1
