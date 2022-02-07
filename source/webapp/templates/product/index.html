@@ -14,7 +14,7 @@
                 <p>{{ pd.descriptions }}</p>
                 <p>{{ pd.price }}</p>
             <p><a href="{% url "views" pd.pk %}">Подробно....</a></p>
-            <p><a href="">Редактировать.</a></p>
+            <p><a href="{% url "product_update" pd.pk %}">Редактировать.</a></p>
             <p><a href="">Удалить.</a></p>
             </div>
         {% endfor %}

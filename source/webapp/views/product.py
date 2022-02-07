@@ -48,3 +48,12 @@ class ProductCreate(CreateView):
     def form_invalid(self, form):
         context = {"form": form}
         render(self.request, self.template_name, context)
+
+
+class ProductUpdate(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = "product/update.html"
+
+    def get_success_url(self):
+        return reverse("index")
