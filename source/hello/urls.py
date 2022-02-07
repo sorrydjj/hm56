@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from webapp.views.product import ProductListView, ProductDetailView, ProductCreate, ProductUpdate, ProductDelete
-from webapp.views.basket import BasketAddProduct
+from webapp.views.basket import BasketAddProduct, BasketListView, BasketDelete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +26,7 @@ urlpatterns = [
     path("product/create/", ProductCreate.as_view(), name="product_create"),
     path("product/<int:pk>/update/", ProductUpdate.as_view(), name="product_update"),
     path("product/<int:pk>/delete/", ProductDelete.as_view(), name="product_delete"),
-    path("basket/add/<int:pk>/", BasketAddProduct.as_view(), name="basket_add")
+    path("basket/add/<int:pk>/", BasketAddProduct.as_view(), name="basket_add"),
+    path("basket/", BasketListView.as_view(), name="basket"),
+    path("basket/remove/<int:pk>/", BasketDelete.as_view(), name="basket_delete")
 ]
