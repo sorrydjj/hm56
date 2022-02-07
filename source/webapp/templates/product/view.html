@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+        <div style="border: 2px solid black; max-width: 300px; margin-bottom: 20px; padding-left: 15px;border-radius: 33px">
+            <h3 style=" text-overflow: ellipsis; max-width: 300px;white-space: nowrap; overflow:hidden;">{{ product.name }}</h3>
+            <p>Описание: {{ product.descriptions }}</p>
+            <p>Цена: {{ product.price }}</p>
+            <p>Категория: {{ product.category }}</p>
+            <p>Количество: {{ product.count }}</p>
+
+            </div>
+    <p><a href="{% url "index" %}">На страницу Товаров.</a></p>
+{% endblock %}

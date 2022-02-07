@@ -11,3 +11,15 @@ class ProductListView(ListView):
     context_object_name = "product"
     paginate_by = 5
     paginate_orphans = 1
+
+
+class ProductDetailView(DetailView):
+    template_name = "product/view.html"
+    model = Product
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.object
+        context['product'] = product
+        return context
