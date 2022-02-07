@@ -18,8 +18,11 @@ class BasketAddProduct(CreateView):
         else:
             if Basket.objects.filter(products=prod):
                 bask = Basket.objects.get(products=prod)
-                bask.counts += 1
-                bask.save()
+                if bask.counts >= prod.count:
+                    pass
+                else:
+                    bask.counts += 1
+                    bask.save()
             else:
                 Basket.objects.create(products=prod, counts=1)
         return redirect("index")
@@ -32,6 +35,7 @@ class BasketListView(ListView):
     context_object_name = "basket"
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        print(self.object_list)
         context = super().get_context_data(**kwargs)
         cont = self.object_list
         context['basket'] = cont
