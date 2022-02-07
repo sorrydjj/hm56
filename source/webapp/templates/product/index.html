@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block nav %}
+    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'product_create' %}">Создание продукта</a>
+                </li>
 {% endblock %}
 
 {% block content %}

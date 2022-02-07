@@ -5,6 +5,9 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView, U
 
 from webapp.models import Basket, Product, Category
 
+from webapp.forms import ProductForm
+
+
 class ProductListView(ListView):
     template_name = "product/index.html"
     model = Product
@@ -12,10 +15,18 @@ class ProductListView(ListView):
     paginate_by = 5
     paginate_orphans = 1
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cont = self.object_list.filter(count__gte=1)
+        context['product'] = cont
+        return context
+
+
 
 class ProductDetailView(DetailView):
     template_name = "product/view.html"
     model = Product
+
 
 
     def get_context_data(self, **kwargs):
@@ -23,3 +34,17 @@ class ProductDetailView(DetailView):
         product = self.object
         context['product'] = product
         return context
+
+
+class ProductCreate(CreateView):
+    model = Product
+    template_name = "product/create.html"
+    form_class = ProductForm
+
+    def form_valid(self, form):
+        form.save()
+        return redirect("index")
+
+    def form_invalid(self, form):
+        context = {"form": form}
+        render(self.request, self.template_name, context)
