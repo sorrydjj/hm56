@@ -13,7 +13,7 @@ class ProductListView(ListView):
     template_name = "product/index.html"
     model = Product
     context_object_name = "product"
-    paginate_by = 5
+    paginate_by = 10
     paginate_orphans = 1
 
     def post(self, request, *args, **kwargs):
@@ -75,20 +75,5 @@ class ProductDelete(DeleteView):
 
     def get_success_url(self):
         return reverse("index")
-
-# class BasketAdd(TemplateView):
-#     template_name = "basket/basket.html"
-#
-#     def post(self, request, *args, **kwargs):
-#         prod = get_object_or_404(Product, pk=self.kwargs.get('pk'))
-#
-#         if Basket.objects.filter(products=prod):
-#             bask = Basket.objects.get(products=prod)
-#             bask.counts += 1
-#             bask.save()
-#             print(bask.products)
-#         else:
-#             Basket.objects.create(products=prod, counts=1)
-#         return redirect("index")
 
 

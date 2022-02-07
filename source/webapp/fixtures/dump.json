@@ -1,0 +1,194 @@
+[
+{
+  "model": "webapp.category",
+  "pk": 1,
+  "fields": {
+    "names": "Other"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 2,
+  "fields": {
+    "names": "Fruit"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 3,
+  "fields": {
+    "names": "Vegetables"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 4,
+  "fields": {
+    "names": "Berries"
+  }
+},
+{
+  "model": "webapp.category",
+  "pk": 5,
+  "fields": {
+    "names": "Meat"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 1,
+  "fields": {
+    "name": "Aplle",
+    "descriptions": "Apleesessese",
+    "category": 2,
+    "count": 10,
+    "price": "30.00"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 2,
+  "fields": {
+    "name": "Cherrys",
+    "descriptions": "Test11",
+    "category": 4,
+    "count": 120,
+    "price": "20.00"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 3,
+  "fields": {
+    "name": "Tomato",
+    "descriptions": "test2",
+    "category": 3,
+    "count": 0,
+    "price": "40.00"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 5,
+  "fields": {
+    "name": "Potato",
+    "descriptions": "test",
+    "category": 3,
+    "count": 35,
+    "price": "100.00"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 6,
+  "fields": {
+    "name": "Milk",
+    "descriptions": "tsest",
+    "category": 1,
+    "count": 10,
+    "price": "200.00"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 7,
+  "fields": {
+    "name": "Meat",
+    "descriptions": "test",
+    "category": 5,
+    "count": 20,
+    "price": "500.00"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 8,
+  "fields": {
+    "name": "mango",
+    "descriptions": "nafff",
+    "category": 2,
+    "count": 50,
+    "price": "20.00"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 9,
+  "fields": {
+    "name": "bread",
+    "descriptions": "asdas",
+    "category": 1,
+    "count": 10,
+    "price": "47.00"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 10,
+  "fields": {
+    "name": "watermelon",
+    "descriptions": "",
+    "category": 4,
+    "count": 5,
+    "price": "350.00"
+  }
+},
+{
+  "model": "webapp.basket",
+  "pk": 1,
+  "fields": {
+    "products": 1,
+    "counts": 10
+  }
+},
+{
+  "model": "webapp.basket",
+  "pk": 6,
+  "fields": {
+    "products": 2,
+    "counts": 3
+  }
+},
+{
+  "model": "webapp.basket",
+  "pk": 7,
+  "fields": {
+    "products": 8,
+    "counts": 1
+  }
+},
+{
+  "model": "webapp.basket",
+  "pk": 8,
+  "fields": {
+    "products": 7,
+    "counts": 1
+  }
+},
+{
+  "model": "webapp.basket",
+  "pk": 9,
+  "fields": {
+    "products": 10,
+    "counts": 1
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$kpI3Xc4A5ST0vNwv5AkcWu$jD9aRqP/PjXr7sG2sNa70L4Y9b4EDv5QGhqI/CYwkNk=",
+    "last_login": "2022-02-07T07:21:30.352Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2022-02-07T07:21:16.496Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
