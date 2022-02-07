@@ -1,7 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views import View
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, TemplateView
 
 from webapp.models import Basket, Product, Category
 
@@ -14,6 +15,12 @@ class ProductListView(ListView):
     context_object_name = "product"
     paginate_by = 5
     paginate_orphans = 1
+
+    def post(self, request, *args, **kwargs):
+        print(kwargs)
+        if kwargs['pk'] in Basket.products:
+            return
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -68,3 +75,20 @@ class ProductDelete(DeleteView):
 
     def get_success_url(self):
         return reverse("index")
+
+# class BasketAdd(TemplateView):
+#     template_name = "basket/basket.html"
+#
+#     def post(self, request, *args, **kwargs):
+#         prod = get_object_or_404(Product, pk=self.kwargs.get('pk'))
+#
+#         if Basket.objects.filter(products=prod):
+#             bask = Basket.objects.get(products=prod)
+#             bask.counts += 1
+#             bask.save()
+#             print(bask.products)
+#         else:
+#             Basket.objects.create(products=prod, counts=1)
+#         return redirect("index")
+
+

@@ -8,6 +8,11 @@
             <p>Цена: {{ product.price }}</p>
             <p>Категория: {{ product.category }}</p>
             <p>Количество: {{ product.count }}</p>
+            <form action="{% url "basket_add" product.pk %}"  method="post">
+                    {% csrf_token %}
+                    <button type="submit">Добавить в корзину</button>
+                </form>
+            <br/>
 
             </div>
     <p><a href="{% url "index" %}">На страницу Товаров.</a></p>

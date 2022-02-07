@@ -11,3 +11,10 @@ class ProductForm(forms.ModelForm):
         widgets = {
             "category": forms.RadioSelect
         }
+
+class BasketForm(forms.ModelForm):
+
+    class Meta:
+        model = Basket
+        exclude = ["count"]
+        widgets = {}

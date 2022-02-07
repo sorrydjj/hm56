@@ -16,6 +16,11 @@
             <p><a href="{% url "views" pd.pk %}">Подробно....</a></p>
             <p><a href="{% url "product_update" pd.pk %}">Редактировать.</a></p>
             <p><a href="{% url "product_delete" pd.pk %}">Удалить.</a></p>
+                <form action="{% url "basket_add" pd.pk %}"  method="post">
+                    {% csrf_token %}
+                    <button type="submit">Добавить в корзину</button>
+                </form>
+                <br/>
             </div>
         {% endfor %}
 
