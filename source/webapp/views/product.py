@@ -57,3 +57,14 @@ class ProductUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse("index")
+
+
+class ProductDelete(DeleteView):
+    model = Product
+    template_name = "product/delete.html"
+
+    def post(self, request, *args, **kwargs):
+        return super().delete(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse("index")
