@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
-from webapp.models import Basket, Product
+from webapp.models import Product, Order
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -12,9 +12,11 @@ class ProductForm(forms.ModelForm):
             "category": forms.RadioSelect
         }
 
-class BasketForm(forms.ModelForm):
+class OrderForm(forms.ModelForm):
 
     class Meta:
-        model = Basket
-        exclude = ["count"]
-        widgets = {}
+        model = Order
+        exclude = ["date", "productes"]
+        widgets = {
+
+        }

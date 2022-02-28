@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, TemplateView
 
-from webapp.models import Basket, Product, Category
+from webapp.models import Product, Category
 
 from webapp.forms import ProductForm
 
@@ -50,7 +50,7 @@ class ProductCreate(CreateView):
 
     def form_valid(self, form):
         form.save()
-        return redirect("index")
+        return redirect("webapp:index")
 
     def form_invalid(self, form):
         context = {"form": form}
@@ -63,7 +63,7 @@ class ProductUpdate(UpdateView):
     template_name = "product/update.html"
 
     def get_success_url(self):
-        return reverse("index")
+        return reverse("webapp:index")
 
 
 class ProductDelete(DeleteView):
@@ -74,6 +74,6 @@ class ProductDelete(DeleteView):
         return super().delete(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse("index")
+        return reverse("webapp:index")
 
 

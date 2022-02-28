@@ -1,14 +1,5 @@
 {% extends 'base.html' %}
 
-{% block nav %}
-    <li class="nav-item">
-                    <a class="nav-link" href="{% url 'product_create' %}">Создание продукта</a>
-                </li>
-
-    <li class="nav-item">
-                    <a class="nav-link" href="{% url 'basket' %}">Корзина</a>
-                </li>
-{% endblock %}
 
 {% block content %}
     <h1>Список Продуктов</h1>
@@ -17,13 +8,10 @@
             <h3 style=" text-overflow: ellipsis; max-width: 300px;white-space: nowrap; overflow:hidden;">{{ pd.name}}</h3>
                 <p>{{ pd.descriptions }}</p>
                 <p>{{ pd.price }}</p>
-            <p><a href="{% url "views" pd.pk %}">Подробно....</a></p>
-            <p><a href="{% url "product_update" pd.pk %}">Редактировать.</a></p>
-            <p><a href="{% url "product_delete" pd.pk %}">Удалить.</a></p>
-                <form action="{% url "basket_add" pd.pk %}"  method="post">
-                    {% csrf_token %}
-                    <button type="submit">Добавить в корзину</button>
-                </form>
+            <p><a href="{% url "webapp:views" pd.pk %}">Подробно....</a></p>
+            <p><a href="{% url "webapp:product_update" pd.pk %}">Редактировать.</a></p>
+            <p><a href="{% url "webapp:product_delete" pd.pk %}">Удалить.</a></p>
+
                 <br/>
             </div>
         {% endfor %}
