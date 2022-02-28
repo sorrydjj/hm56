@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -34,8 +35,6 @@ class ProductDetailView(DetailView):
     template_name = "product/view.html"
     model = Product
 
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product = self.object
@@ -43,10 +42,11 @@ class ProductDetailView(DetailView):
         return context
 
 
-class ProductCreate(CreateView):
+class ProductCreate(PermissionRequiredMixin, CreateView):
     model = Product
     template_name = "product/create.html"
     form_class = ProductForm
+    permission_required = "webapp.add_product"
 
     def form_valid(self, form):
         form.save()
@@ -57,18 +57,20 @@ class ProductCreate(CreateView):
         render(self.request, self.template_name, context)
 
 
-class ProductUpdate(UpdateView):
+class ProductUpdate(PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "product/update.html"
+    permission_required = "webapp.change_product"
 
     def get_success_url(self):
         return reverse("webapp:index")
 
 
-class ProductDelete(DeleteView):
+class ProductDelete(PermissionRequiredMixin, DeleteView):
     model = Product
     template_name = "product/delete.html"
+    permission_required = "webapp.delete_product"
 
     def post(self, request, *args, **kwargs):
         return super().delete(request, *args, **kwargs)

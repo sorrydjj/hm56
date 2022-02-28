@@ -9,9 +9,12 @@
                 <p>{{ pd.descriptions }}</p>
                 <p>{{ pd.price }}</p>
             <p><a href="{% url "webapp:views" pd.pk %}">Подробно....</a></p>
-            <p><a href="{% url "webapp:product_update" pd.pk %}">Редактировать.</a></p>
-            <p><a href="{% url "webapp:product_delete" pd.pk %}">Удалить.</a></p>
-
+            {% if perms.webapp.change_product %}
+                <p><a href="{% url "webapp:product_update" pd.pk %}">Редактировать.</a></p>
+            {% endif %}
+            {% if perms.webapp.delete_product %}
+                <p><a href="{% url "webapp:product_delete" pd.pk %}">Удалить.</a></p>
+            {% endif %}
                 <br/>
             </div>
         {% endfor %}
