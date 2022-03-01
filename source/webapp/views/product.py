@@ -1,3 +1,4 @@
+from django.contrib import sessions
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
@@ -17,10 +18,20 @@ class ProductListView(ListView):
     paginate_by = 10
     paginate_orphans = 1
 
-    def post(self, request, *args, **kwargs):
-        print(kwargs)
-        if kwargs['pk'] in Basket.products:
-            return
+
+    # def get(self, request, *args, **kwargs):
+    #     if request.session["KEY"]:
+    #         key = request.session["KEY"]
+    #         count = key[f"{Product.objects.filter(pk=1)}"]
+    #         print(type(count))
+    #         count += 1
+    #         key[f"{Product.objects.filter(pk=1)}"] = f"{count}"
+    #         request.session["KEY"][f"{Product.objects.filter(pk=3)}"] = 1
+    #     else:
+    #         request.session["KEY"] = {f"{Product.objects.filter(pk=1)}": 5}
+    #     print(f"{request.session['KEY']=}")
+    #     return super().get(request, *args, **kwargs)
+
 
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -78,4 +89,35 @@ class ProductDelete(PermissionRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse("webapp:index")
 
-
+# class AddSessionProduct(CreateView):
+#     def post(self, request, *args, **kwargs):
+#         product = get_object_or_404(Product, pk=self.kwargs.get('pk'))
+#
+#         # if request.session["KEY"]:
+#         #     key = request.session["KEY"]
+#         #     if key[f"{product.pk}"]:
+#         #         count = key[f"{product.pk}"]
+#         #         count += 1
+#         #         key[f"{product.pk}"] = f"{count}"
+#         #     else:
+#         #         request.session["KEY"][f"{product.pk}"] = 1
+#         # else:
+#         #     request.session["KEY"] = {f"{product.pk}": 1}
+#         # print(f"{request.session['KEY']=}")
+#         return super().post(request, *args, **kwargs)
+#
+#     def get_success_url(self):
+#         return redirect("webapp:index")
+#
+#
+# class CartView(ListView):
+#     template_name = "product/cart.html"
+#     context_object_name = "prod"
+#     model = Product
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         if self.request.session["KEY"]:
+#             context["product"] = self.request.session["KEY"]
+#             print(context["product"])
+#         return context

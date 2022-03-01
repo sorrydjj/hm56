@@ -13,10 +13,6 @@ class ProductForm(forms.ModelForm):
         }
 
 class OrderForm(forms.ModelForm):
-
     class Meta:
         model = Order
-        exclude = ["date", "productes"]
-        widgets = {
-
-        }
+        exclude = ["products"]

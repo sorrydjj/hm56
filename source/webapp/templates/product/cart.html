@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+    {% include "partial/messages.html" %}
+    {% for key, value in product.items %}
+        <div style="border: 2px solid black; max-width: 300px; margin-bottom: 20px; padding-left: 15px;border-radius: 33px">
+            <p>Название: {{ key.name }}</p>
+            <p>Количество: {{ value }}</p>
+            <p>Цена: {{ key.price }}</p>
+        <form action="{% url "webapp:remove_product_cart" key.pk %}"  method="post">
+            {% csrf_token %}
+            <button type="submit">Удалить один продукт</button>
+        </form>
+        <br>
+        </div>
+    {% empty %}
+            <tr>
+                <td><h3>Корзина пуста</h3></td>
+            </tr>
+    {% endfor %}
+    {% if sum %}
+        <h3><b>Общая цена: {{ sum }}</b></h3>
+        <br>
+    {% endif %}
+    {% if product %}
+        <form action="{% url "webapp:order_create" %}"  method="post">
+            {% csrf_token %}
+            <button type="submit">Сделать заказ</button>
+        </form>
+    {% endif %}
+
+{% endblock %}

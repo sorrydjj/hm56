@@ -12,33 +12,27 @@ class OrderCreateView(CreateView):
     form_class = OrderForm
     success_url = reverse_lazy("webapp:index")
 
-    # def form_valid(self, form):
-    #     response = super().form_valid(form)
-    #     order = self.object
-    #
-    #     for item in Cart.objects.all():
-    #         OrderProduct.objects.create(product=item.product, qty=item.qty, order=order)
-    #         item.product.amount -= item.qty
-    #         item.product.save()
-    #         item.delete()
-    #     return response
-
     def form_valid(self, form):
         response = super().form_valid(form)
         order = self.object
 
-        cart_products = Cart.objects.all()
         products = []
         order_products = []
-        for item in cart_products:
-            product = item.product
-            qty = item.qty
-            product.amount -= qty
+        cont = {}
+        for k, v in self.request.session["Cart"].items():
+            product = Product.objects.get(pk=k)
+            cont[product] = v
+
+        print(cont)
+        for key, value in cont.items():
+            product = key
+            qty = value
+            product.count -= qty
             products.append(product)
             order_product = OrderProduct(product=product, qty=qty, order=order)
             order_products.append(order_product)
 
         OrderProduct.objects.bulk_create(order_products)
-        Product.objects.bulk_update(products, ("amount",))
-        cart_products.delete()
-        return
+        Product.objects.bulk_update(products, ("count",))
+        del self.request.session["Cart"]
+        return response

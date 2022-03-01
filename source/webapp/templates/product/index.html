@@ -2,6 +2,7 @@
 
 
 {% block content %}
+     {% include "partial/messages.html" %}
     <h1>Список Продуктов</h1>
 {% for pd in product%}
             <div style="border: 2px solid black; max-width: 300px; margin-bottom: 20px; padding-left: 15px;border-radius: 33px">
@@ -15,9 +16,15 @@
             {% if perms.webapp.delete_product %}
                 <p><a href="{% url "webapp:product_delete" pd.pk %}">Удалить.</a></p>
             {% endif %}
-                <br/>
+                <form action="{% url "webapp:add_product_cart" pd.pk %}"  method="post">
+                    {% csrf_token %}
+                    <button type="submit">Добавить в корзину</button>
+                </form>
+                <br>
             </div>
+
         {% endfor %}
+
 
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}

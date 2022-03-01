@@ -1,65 +1,71 @@
-from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-#
-# from webapp.models import Basket, Product, Category
-# from webapp.forms import BasketForm
-#
-# class BasketAddProduct(CreateView):
-#     model = Basket
-#     form_class = BasketForm
-#     template_name = "basket/basket.html"
-#
-#     def post(self, request, *args, **kwargs):
-#         prod = get_object_or_404(Product, pk=self.kwargs.get('pk'))
-#         if Product.objects.filter(name=prod, count__lte=0):
-#             pass
-#         else:
-#             if Basket.objects.filter(products=prod):
-#                 bask = Basket.objects.get(products=prod)
-#                 if bask.counts >= prod.count:
-#                     pass
-#                 else:
-#                     bask.counts += 1
-#                     bask.save()
-#             else:
-#                 Basket.objects.create(products=prod, counts=1)
-#         return redirect("index")
-#
-#
-#
-# class BasketListView(ListView):
-#     model = Basket
-#     template_name = "basket/index.html"
-#     context_object_name = "basket"
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         print(self.object_list)
-#         context = super().get_context_data(**kwargs)
-#         cont = self.object_list
-#         context['basket'] = cont
-#         return context
-#
-#
-# class BasketDelete(DeleteView):
-#     model = Basket
-#
-#     def post(self, request, *args, **kwargs):
-#         prod = get_object_or_404(Product, pk=self.kwargs.get('pk'))
-#         if Basket.objects.filter(products=prod, counts__lte=1):
-#             bask = Basket.objects.get(products=prod)
-#             bask.delete()
-#         else:
-#             bask = Basket.objects.get(products=prod)
-#             bask.counts -= 1
-#             bask.save()
-#         return redirect("basket")
+from django.http import HttpResponseNotFound
+from django.shortcuts import render, redirect
+from django.views import View
+from django.contrib import messages
 
-CATEGORY_CHOICES = (
-    (DEFAULT_CATEGORY, 'Разное'),
-    ('food', 'Еда'),
-    ('tech', 'Бытовая техника'),
-    ('tools', 'Инструменты'),
-    ('toys', 'Игрушки'),
-)
+from webapp.models import Product
+
+
+def add_product(request, pk):
+    if request.method == "GET":
+        return HttpResponseNotFound('<h1>Page not found 404</h1>')
+    else:
+        product = Product.objects.get(pk=pk)
+        if "Cart" in request.session:
+            key = request.session["Cart"]
+            if f'{product.pk}' in request.session["Cart"].keys():
+                if key[f"{product.pk}"] < product.count:
+                    count = key[f"{product.pk}"]
+                    count += 1
+                    key[product.pk] = count
+                    request.session["Cart"] = key
+                    messages.add_message(request, messages.SUCCESS, 'Товар успешно добавлен в количсетве 1!')
+                else:
+                    messages.add_message(request, messages.ERROR, 'Превышен лимит!')
+            else:
+                key[product.pk] = 1
+                request.session["Cart"] = key
+                messages.add_message(request, messages.SUCCESS, 'Товар успешно добавлен в количсетве 1!')
+        else:
+            request.session["Cart"] = {product.pk: 1}
+            messages.add_message(request, messages.SUCCESS, 'Товар успешно добавлен в количсетве 1!')
+        return redirect("webapp:index")
+
+
+def remove_product(request, pk):
+    if request.method == "GET":
+        return HttpResponseNotFound('<h1>Page not found 404</h1>')
+    else:
+        product = Product.objects.get(pk=pk)
+        if "Cart" in request.session:
+            key = request.session["Cart"]
+            if f'{product.pk}' in request.session["Cart"].keys():
+                if key[f"{product.pk}"] <= 1:
+                    del key[f"{product.pk}"]
+                    request.session["Cart"] = key
+                    messages.add_message(request, messages.WARNING, 'Товар успешно Удален!')
+                else:
+                    count = key[f"{product.pk}"]
+                    count -= 1
+                    key[product.pk] = count
+                    request.session["Cart"] = key
+                    messages.add_message(request, messages.SUCCESS, 'Товар успешно удален в количсетве 1!')
+                    return redirect("webapp:carts")
+            return redirect("webapp:carts")
+        return redirect("webapp:carts")
+
+
+class CartView(View):
+    def get(self, request, *args, **kwargs):
+        sums = []
+        cont = {}
+        if "Cart" in request.session:
+            for k, v in request.session["Cart"].items():
+                product = Product.objects.get(pk=k)
+                cont[product] = v
+                sums.append(product.price * v)
+        context = {}
+        context['product'] = cont
+        context['sum'] = sum(sums)
+        return render(request, "product/cart.html", context)
+
