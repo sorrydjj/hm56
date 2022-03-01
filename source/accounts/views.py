@@ -29,7 +29,7 @@ class RegisterView(CreateView):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('webapp:project')
+        return redirect('webapp:index')
     context = {}
     if request.method == 'POST':
         username = request.POST.get('username')
