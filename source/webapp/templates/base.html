@@ -32,7 +32,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'webapp:product_create' %}">Создание продукта</a>
                             </li>
+
                         {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'webapp:user_orders' %}">Мои заказы</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:logout' %}">Выход</a>
                     </li>

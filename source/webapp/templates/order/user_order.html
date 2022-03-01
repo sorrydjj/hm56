@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Профили</h1>
+    <br>
+    {% for key, value in user_object.items %}
+        <h3>Имя: {{ key.name }}</h3>
+        <p><strong>Телефон: </strong>{{ key.phone}}</p>
+        <p><strong>Адресс: </strong>{{ key.address }}</p>
+        <p><strong>Заказы</strong></p>
+        {% for v in value %}
+            <div style="border: 2px solid black; max-width: 300px; margin-bottom: 20px; padding-left: 15px">
+            <p>Название:{{ v.product.name }}</p>
+            <p>Цена: {{ v.product.price }}</p>
+            <p>Количество: {{ v.qty }}</p>
+           </div>
+        {% endfor %}
+        <p>-----------------------------------------------</p>
+    {% endfor %}
+
+{% endblock content %}

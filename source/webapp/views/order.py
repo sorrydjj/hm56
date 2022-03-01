@@ -1,8 +1,7 @@
-from django.contrib.auth.models import AnonymousUser
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, ListView, DeleteView
+from django.views.generic import CreateView, DetailView, ListView
 
 from webapp.forms import OrderForm
 from webapp.models import Product, Order, OrderProduct, User
@@ -40,3 +39,21 @@ class OrderCreateView(CreateView):
         Product.objects.bulk_update(products, ("count",))
         del self.request.session["Cart"]
         return response
+
+
+class UserOrdersView(LoginRequiredMixin, ListView):
+    template_name = "order/user_order.html"
+    model = Order
+
+
+    def get_context_data(self, **kwargs):
+        ord = Order.objects.filter(user=self.request.user.pk)
+        kwargs['user_object'] = ord
+        cont = {}
+
+        for key in ord:
+            print(key)
+            cont[key] = OrderProduct.objects.filter(order=key.pk)
+
+        kwargs['user_object'] = cont
+        return super().get_context_data(**kwargs)
