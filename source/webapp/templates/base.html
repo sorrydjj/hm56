@@ -34,12 +34,12 @@
                             </li>
                         {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'webapp:carts' %}">Корзина</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'accounts:logout' %}">Выход</a>
                     </li>
                     {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'webapp:carts' %}">Корзина</a>
+                    </li>
                 {% endblock %}
             </ul>
         </div>

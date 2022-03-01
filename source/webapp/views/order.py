@@ -1,20 +1,25 @@
+from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DeleteView
 
 from webapp.forms import OrderForm
-from webapp.models import Product, Order, OrderProduct
+from webapp.models import Product, Order, OrderProduct, User
 
 
 class OrderCreateView(CreateView):
     model = Order
     form_class = OrderForm
     success_url = reverse_lazy("webapp:index")
+    template_name = "order/create.html"
 
     def form_valid(self, form):
         response = super().form_valid(form)
         order = self.object
+        if self.request.user.pk:
+            order.user = self.request.user
+            order.save()
 
         products = []
         order_products = []
@@ -23,7 +28,6 @@ class OrderCreateView(CreateView):
             product = Product.objects.get(pk=k)
             cont[product] = v
 
-        print(cont)
         for key, value in cont.items():
             product = key
             qty = value

@@ -1,6 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
-
+User = get_user_model()
 
 class Category(models.Model):
     names = models.CharField(max_length=100, null=False, blank=False)
@@ -38,6 +39,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     products = models.ManyToManyField('webapp.Product', related_name='orders', verbose_name='Товары',
                                       through='webapp.OrderProduct', through_fields=['order', 'product'])
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_order", blank=True, null=True)
 
     def __str__(self):
         return f'{self.name} - {self.phone}'
