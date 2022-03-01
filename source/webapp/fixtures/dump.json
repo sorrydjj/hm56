@@ -85,7 +85,7 @@
     "name": "Burger",
     "descriptions": "sdfdsf",
     "category": 1,
-    "count": 20,
+    "count": 19,
     "price": "70.00"
   }
 },
@@ -120,6 +120,17 @@
     "address": "Not User",
     "created_at": "2022-03-01T16:12:43.392Z",
     "user": null
+  }
+},
+{
+  "model": "webapp.order",
+  "pk": 18,
+  "fields": {
+    "name": "Two test Moder",
+    "phone": "34543",
+    "address": "Moder",
+    "created_at": "2022-03-01T17:19:35.153Z",
+    "user": 2
   }
 },
 {
@@ -177,6 +188,15 @@
   }
 },
 {
+  "model": "webapp.orderproduct",
+  "pk": 7,
+  "fields": {
+    "product": 5,
+    "order": 18,
+    "qty": 1
+  }
+},
+{
   "model": "auth.user",
   "pk": 1,
   "fields": {
@@ -199,7 +219,7 @@
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$320000$BzjjyMHwQjp2CsQDtIgtCD$c4dKU2UQtoTCVRBi3aMwYLr0upJmwBaEK3TvolR6lIQ=",
-    "last_login": "2022-03-01T15:54:07.736Z",
+    "last_login": "2022-03-01T16:52:08.503Z",
     "is_superuser": false,
     "username": "moderator",
     "first_name": "",
