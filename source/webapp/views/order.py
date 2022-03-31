@@ -34,7 +34,6 @@ class OrderCreateView(CreateView):
             products.append(product)
             order_product = OrderProduct(product=product, qty=qty, order=order)
             order_products.append(order_product)
-
         OrderProduct.objects.bulk_create(order_products)
         Product.objects.bulk_update(products, ("count",))
         del self.request.session["Cart"]

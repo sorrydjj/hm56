@@ -37,8 +37,6 @@ class Order(models.Model):
     phone = models.CharField(max_length=30, verbose_name='Телефон')
     address = models.CharField(max_length=100, verbose_name='Адрес')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
-    products = models.ManyToManyField('webapp.Product', related_name='orders', verbose_name='Товары',
-                                      through='webapp.OrderProduct', through_fields=['order', 'product'])
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_order", blank=True, null=True)
 
     def __str__(self):
