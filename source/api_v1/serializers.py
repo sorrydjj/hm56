@@ -32,13 +32,13 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ("name", "phone", "address", "created_at", "user", "order_products")
-        read_only_fields = ("id", "user", )
+        read_only_fields = ("id", )
 
     def create(self, validated_data):
         products = []
         cart_products = []
         order_products = []
-        order = Order.objects.create(name=validated_data["name"], phone=validated_data["phone"], address=validated_data["address"],user=validated_data["user"])
+        order = Order.objects.create(name=validated_data["name"], phone=validated_data["phone"], address=validated_data["address"], user=validated_data["user"])
 
         for cart in validated_data["order_products"]:
             prod = OrderProduct()
